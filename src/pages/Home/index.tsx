@@ -22,16 +22,16 @@ import { useContext } from 'react'
 
 // tipagem dos dados do formulario usando schema
 
+const newCycleFormValidationSchema = zod.object({
+  task: zod.string().min(1, 'Informe a tarefa'),
+  minutesAmount: zod.number().min(5).max(60),
+})
+
+type NewCycleFormData = zod.infer<typeof newCycleFormValidationSchema>
+
 export function Home() {
   const { activeCycle, createNewCycle, interruptCurrentCycle } =
     useContext(CyclesContext)
-
-  const newCycleFormValidationSchema = zod.object({
-    task: zod.string().min(1, 'Informe a tarefa'),
-    minutesAmount: zod.number().min(1).max(60),
-  })
-
-  type NewCycleFormData = zod.infer<typeof newCycleFormValidationSchema>
 
   const newCycleForm = useForm<NewCycleFormData>({
     resolver: zodResolver(newCycleFormValidationSchema),
@@ -45,17 +45,17 @@ export function Home() {
 
   // CRIAÇÃO E RESET DE CICLO
 
-  const task = watch('task')
-  const isSubmitDisabled = !task
-
   function handleCreateNewCycle(data: NewCycleFormData) {
     createNewCycle(data)
     reset()
   }
 
+  const task = watch('task')
+  const isSubmitDisabled = !task
+
   return (
     <HomeContainer>
-      <form action="" onSubmit={handleSubmit(handleCreateNewCycle)}>
+      <form onSubmit={handleSubmit(handleCreateNewCycle)}>
         <FormProvider {...newCycleForm}>
           <NewCycleForm />
         </FormProvider>

@@ -10,13 +10,14 @@ export function History() {
   return (
     <HistoryContainer>
       <h1>Meu histórico</h1>
+
       <HistoryList>
         <table>
           <thead>
             <tr>
               <th>Tarefa</th>
               <th>Duração</th>
-              <th>Início</th>
+              <th>Duração</th>
               <th>Status</th>
             </tr>
           </thead>
@@ -33,17 +34,14 @@ export function History() {
                     })}
                   </td>
                   <td>
-                    {/* condicional ternária sem else */}
                     {cycle.finishedDate && (
                       <Status statusColor="green">Concluído</Status>
                     )}
 
-                    {/* condicional ternária sem else */}
                     {cycle.interruptedDate && (
                       <Status statusColor="red">Interrompido</Status>
                     )}
 
-                    {/* condicional ternária sem else */}
                     {!cycle.finishedDate && !cycle.interruptedDate && (
                       <Status statusColor="yellow">Em andamento</Status>
                     )}
